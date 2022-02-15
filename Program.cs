@@ -14,7 +14,6 @@ namespace CasinoWoGUI
     {
       if (games_list == 1)
       {
-        
         int bet;
         string accept = "Stay";
         while (accept == "Stay")
@@ -26,7 +25,7 @@ namespace CasinoWoGUI
           while (bet > balance)
           {
             Console.WriteLine("Ставка не может превышать баланс и быть меньше нуля!");
-            Console.Write("Введите число заново: ");
+            Console.Write("Введите ставкуы заново: ");
             bet = int.Parse(Console.ReadLine());
           }
           balance -= bet;
@@ -57,6 +56,59 @@ namespace CasinoWoGUI
       else if (games_list == 2)
       {
         
+      }
+      else if (games_list == 3)
+      {
+        int bet;
+        string accept = "Stay";
+        while (accept == "Stay")
+        {
+          Console.Clear();
+          Console.WriteLine("\t  Угадай число");
+          Console.Write("Ставка: ");
+          bet = int.Parse(Console.ReadLine());
+          while (bet > balance)
+          {
+            Console.WriteLine("Ставка не может превышать баланс и быть меньше нуля!");
+            Console.Write("Введите ставку заново: ");
+            bet = int.Parse(Console.ReadLine());
+          }
+          Console.Write("Введите количетсво чисел: ");
+          int count = int.Parse(Console.ReadLine());
+          Console.WriteLine($"Выберите число от 1 до {count}");
+          int number = int.Parse(Console.ReadLine());
+          while (number < 1 && number > count)
+          {
+            Console.WriteLine($"Выбранное число не попадает в заданный промежуток от 1 до {count}");
+            Console.Write("Введите число заново: ");
+            number = int.Parse(Console.ReadLine());
+          }
+          balance -= bet;
+          int num = rnd.Next(1, count);
+          Console.ForegroundColor=ConsoleColor.Yellow;
+          Console.WriteLine($"Выпало число {num}");
+          Console.ForegroundColor = ConsoleColor.White;
+          if (number == num)
+          {
+            balance += bet * (count - 0.05) ;
+            Console.WriteLine($"Ваш выигрыш составил: {bet * (count - 0.05)}");
+            wins++;
+          }
+          else
+          {
+            balance -= bet;
+            Console.WriteLine($"Ваш проигрыш составил: {bet}");
+            if (balance == 0)
+            {
+              Console.WriteLine("Вы все проиграли!");
+            }
+          }
+
+          games++;
+          Console.WriteLine("\nЕсли хотите выйти, введите: Exit");
+          Console.WriteLine("Если хотите остаться, введите: Stay");
+          accept = Console.ReadLine();
+        }
       }
     }
     
