@@ -1,14 +1,20 @@
 ﻿using System;
+using System.Diagnostics;
+
+
 namespace CasinoWoGUI
 {
   internal class Program
   {
     static Random rnd = new Random();
     public static double balance;
+    public static double wins = 0;
+    public static double games = 0;
     public static void game(int games_list)
     {
       if (games_list == 1)
       {
+        
         int bet;
         string accept = "Stay";
         while (accept == "Stay")
@@ -29,7 +35,8 @@ namespace CasinoWoGUI
           if (Win(n))
           {
             balance += bet * 1.95;
-            Console.WriteLine($"Ваш выигрыш составил: {bet * 2}");
+            Console.WriteLine($"Ваш выигрыш составил: {bet * 1.95}");
+            wins++;
           }
           else
           {
@@ -40,35 +47,40 @@ namespace CasinoWoGUI
               Console.WriteLine("Вы все проиграли!");
             }
           }
-          
+
+          games++;
           Console.WriteLine("\nЕсли хотите выйти, введите: Exit");
           Console.WriteLine("Если хотите остаться, введите: Stay");
           accept = Console.ReadLine();
         }
+      }
+      else if (games_list == 2)
+      {
+        
       }
     }
     
     static bool Win(int number)
     {
       Console.ForegroundColor=ConsoleColor.Yellow;
-      int bet = rnd.Next(0, 37);
-      if (number == 0 && bet == 0)
+      int num = rnd.Next(0, 37);
+      if (number == 0 && num == 0)
       {
         Console.WriteLine("\tВыпал Zero");
         return true;
       }
-      if(bet%2==0)
-        Console.WriteLine($"\tВыпали красные! ({bet})");
+      if (num % 2 == 0)
+        Console.WriteLine($"\tВыпали красные! ({num})");
       else
       {
-        Console.WriteLine($"\tВыпали черные! ({bet})");
+        Console.WriteLine($"\tВыпали черные! ({num})");
       }
  
       Console.ResetColor();
-      if (number%2 == 0 && bet%2 == 0)
+      if (number % 2 == 0 && num % 2 == 0)
         return true;
  
-      if (number % 2 == 1 && bet % 2 == 1)
+      if (number % 2 == 1 && num % 2 == 1)
         return true;
       return false;
  
@@ -81,9 +93,10 @@ namespace CasinoWoGUI
       Console.Write($"Здравствуйте, {name}, введите Ваш баланс: ");
       balance = int.Parse(Console.ReadLine());
       Console.WriteLine($"\nИгрок: {name}\nБаланс: {balance}");
+      Stopwatch stopWatch = new Stopwatch();
+      stopWatch.Start();
       while (true)
       {
-        
         Console.WriteLine("\tМеню: ");
         Console.WriteLine("\t  1. Список игр");
         Console.WriteLine("\t  2. Процент выигрышей");
@@ -117,6 +130,28 @@ namespace CasinoWoGUI
           Console.Clear();
         }
 
+        if (menu == 2)
+        {
+          if (games == 0)
+          {
+            Console.WriteLine("Сначала сыграйте игру");
+          }
+          else
+          {
+            double wirate = Math.Round((wins/games)*100, 2);
+            Console.WriteLine($"Процент выигрышей: {wirate}%");
+          }
+        }
+        if (menu == 3)
+        {
+          stopWatch.Stop();
+          TimeSpan ts = stopWatch.Elapsed;
+          string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
+            ts.Hours, ts.Minutes, ts.Seconds,
+            ts.Milliseconds / 10);
+          Console.WriteLine("Время в игре: " + elapsedTime);
+        } 
+        
         if (menu == 4)
         {
           Console.WriteLine($"Ваш баланс: {balance}");
