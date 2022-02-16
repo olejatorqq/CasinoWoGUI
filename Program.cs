@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 
-
 namespace CasinoWoGUI
 {
   internal class Program
@@ -102,11 +101,8 @@ namespace CasinoWoGUI
             Console.WriteLine("\nЕсли хотите выйти, введите: Exit");
             Console.WriteLine("Если хотите остаться, введите: Stay");
             accept = Console.ReadLine();
-            
           }
-          
         }
-
       }
       else if (games_list == 3)
       {
@@ -155,6 +151,47 @@ namespace CasinoWoGUI
             }
           }
 
+          games++;
+          Console.WriteLine("\nЕсли хотите выйти, введите: Exit");
+          Console.WriteLine("Если хотите остаться, введите: Stay");
+          accept = Console.ReadLine();
+        }
+      }
+      else if (games_list == 4)
+      {
+        int bet;
+        string accept = "Stay";
+        while (accept == "Stay")
+        {
+          Console.Clear();
+          Console.WriteLine("\t  Множитель");
+          Console.Write("Ставка: ");
+          bet = int.Parse(Console.ReadLine());
+          while (bet > balance)
+          {
+            Console.WriteLine("Ставка не может превышать баланс и быть меньше нуля!");
+            Console.Write("Введите ставку заново: ");
+            bet = int.Parse(Console.ReadLine());
+          }
+
+          Console.WriteLine("Игра началась");
+          double num = rnd.Next(1, 50) / 10;
+          Console.Write("Введите предельный множитель: ");
+          double power = Convert.ToDouble(Console.ReadLine());
+          Console.ForegroundColor=ConsoleColor.Yellow;
+          Console.WriteLine($"Выпавший множитель: {num}");
+          Console.ForegroundColor=ConsoleColor.White;
+          if (power < num)
+          {
+            Console.WriteLine($"Ваш выигрыш составил: {bet * power}");
+            wins++;
+          }
+          else
+          {
+            Console.WriteLine($"Ваш проигрыш составил: {bet}");
+            balance -= bet;
+          }
+          
           games++;
           Console.WriteLine("\nЕсли хотите выйти, введите: Exit");
           Console.WriteLine("Если хотите остаться, введите: Stay");
