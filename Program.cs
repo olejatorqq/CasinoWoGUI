@@ -21,15 +21,18 @@ namespace CasinoWoGUI
           Console.WriteLine("\t  Рулетка");
           Console.Write("Ставка: ");
           bet = int.Parse(Console.ReadLine());
+          
           while (bet > balance)
           {
             Console.WriteLine("Ставка не может превышать баланс и быть меньше нуля!");
-            Console.Write("Введите ставкуы заново: ");
+            Console.Write("Введите ставку заново: ");
             bet = int.Parse(Console.ReadLine());
           }
+          
           balance -= bet;
           Console.Write("Введите число 0-36: ");
           int n = int.Parse(Console.ReadLine());
+          
           if (Win(n))
           {
             balance += bet * 1.95;
@@ -70,17 +73,20 @@ namespace CasinoWoGUI
             int count = int.Parse(Console.ReadLine());
             Console.WriteLine($"Выберите число, которое будет больше случайного: {count}");
             int number = int.Parse(Console.ReadLine());
+            
             while (number < 1 || number > count)
             {
               Console.WriteLine($"Выбранное число не попадает в заданный промежуток от 1 до {count}");
               Console.Write("Введите число заново: ");
               number = int.Parse(Console.ReadLine());
             }
+            
             int num = rnd.Next(1, count);
             Console.ForegroundColor=ConsoleColor.Yellow;
             Console.WriteLine($"Выпало число {num}");
             Console.WriteLine($"{number} >= {num}?");
             Console.ForegroundColor = ConsoleColor.White;
+            
             if (number >= num)
             {
               balance += ((count - number)/count - 0.05) * bet ;
@@ -114,16 +120,19 @@ namespace CasinoWoGUI
           Console.WriteLine("\t  Угадай число");
           Console.Write("Ставка: ");
           bet = int.Parse(Console.ReadLine());
+          
           while (bet > balance)
           {
             Console.WriteLine("Ставка не может превышать баланс и быть меньше нуля!");
             Console.Write("Введите ставку заново: ");
             bet = int.Parse(Console.ReadLine());
           }
+          
           Console.Write("Введите количетсво чисел: ");
           int count = int.Parse(Console.ReadLine());
           Console.WriteLine($"Выберите число от 1 до {count}");
           int number = int.Parse(Console.ReadLine());
+          
           while (number < 1 || number > count)
           {
             Console.WriteLine($"Выбранное число не попадает в заданный промежуток от 1 до {count}");
@@ -135,6 +144,7 @@ namespace CasinoWoGUI
           Console.ForegroundColor=ConsoleColor.Yellow;
           Console.WriteLine($"Выпало число {num}");
           Console.ForegroundColor = ConsoleColor.White;
+          
           if (number == num)
           {
             balance += bet * (count - 0.05) ;
@@ -167,6 +177,7 @@ namespace CasinoWoGUI
           Console.WriteLine("\t  Множитель");
           Console.Write("Ставка: ");
           bet = int.Parse(Console.ReadLine());
+          
           while (bet > balance)
           {
             Console.WriteLine("Ставка не может превышать баланс и быть меньше нуля!");
@@ -181,6 +192,7 @@ namespace CasinoWoGUI
           Console.ForegroundColor=ConsoleColor.Yellow;
           Console.WriteLine($"Выпавший множитель: {num}");
           Console.ForegroundColor=ConsoleColor.White;
+          
           if (power < num)
           {
             Console.WriteLine($"Ваш выигрыш составил: {bet * power}");
@@ -198,17 +210,72 @@ namespace CasinoWoGUI
           accept = Console.ReadLine();
         }
       }
+      else if (games_list == 5)
+      {
+        int bet;
+        string accept = "Stay";
+        while (accept == "Stay")
+        {
+          Console.Clear();
+          Console.WriteLine("\t  Множитель");
+          Console.Write("Ставка: ");
+          bet = int.Parse(Console.ReadLine());
+          
+          while (bet > balance)
+          {
+            Console.WriteLine("Ставка не может превышать баланс и быть меньше нуля!");
+            Console.Write("Введите ставку заново: ");
+            bet = int.Parse(Console.ReadLine());
+          }
+          
+          Console.Write("Введите Орел или Решка: ");
+          string Eagle = Console.ReadLine();
+          int num = rnd.Next(1, 2);
+          Console.ForegroundColor=ConsoleColor.Yellow;
+          if (num == 1)
+          {
+            Console.WriteLine("Выпал: Орел");
+          }
+          else
+          {
+            Console.WriteLine("Выпала: Решка");
+          }
+          
+          Console.ForegroundColor=ConsoleColor.White;
+          
+          if (Eagle == "Орел" && num == 1)
+          {
+            Console.WriteLine($"Вы выиграли: {bet * 1.95}");
+            wins++;
+          }else if (Eagle == "Решка" && num == 2)
+          {
+            Console.WriteLine($"Вы выиграли: {bet * 1.95}");
+            wins++;
+          }
+          else
+          {
+            Console.WriteLine($"Вы проиграли: {bet}");
+          }
+          
+          games++;
+          Console.WriteLine("\nЕсли хотите выйти, введите: Exit");
+          Console.WriteLine("Если хотите остаться, введите: Stay");
+          accept = Console.ReadLine();
+        }
+      }
     }
     
     static bool Win(int number)
     {
       Console.ForegroundColor=ConsoleColor.Yellow;
       int num = rnd.Next(0, 37);
+      
       if (number == 0 && num == 0)
       {
         Console.WriteLine("\tВыпал Zero");
         return true;
       }
+      
       if (num % 2 == 0)
         Console.WriteLine($"\tВыпали красные! ({num})");
       else
@@ -235,37 +302,42 @@ namespace CasinoWoGUI
       Console.WriteLine($"\nИгрок: {name}\nБаланс: {balance}");
       Stopwatch stopWatch = new Stopwatch();
       stopWatch.Start();
+      
       while (true)
       {
-        Console.WriteLine("\tМеню: ");
+        Console.WriteLine("\n\tМеню: ");
         Console.WriteLine("\t  1. Список игр");
         Console.WriteLine("\t  2. Процент выигрышей");
         Console.WriteLine("\t  3. Время в игре");
         Console.WriteLine("\t  4. Баланс");
         Console.Write("Выберите необходимый пункт: ");
         int menu = int.Parse(Console.ReadLine());
+        
         while (menu < 0 || menu > 4)
         {
           Console.WriteLine("Введенное число должно лежать в промежутке от 1 до 4");
           Console.Write("Введите число заново: ");
           menu = int.Parse(Console.ReadLine());
         }
+        
         if (menu == 1)
         {
           Console.WriteLine("\t  1. Рулетка");
           Console.WriteLine("\t  2. Больше Меньше");
           Console.WriteLine("\t  3. Угадай число");
-          Console.WriteLine("\t  4. Множитель ");
+          Console.WriteLine("\t  4. Множитель");
+          Console.WriteLine("\t  5. Монетка");
           Console.Write("Выберите необходимый пункт: ");
           int games_list = int.Parse(Console.ReadLine());
-          if (games_list < 0 || games_list > 4)
+          
+          if (games_list < 0 || games_list > 5)
           {
             do
             {
-              Console.WriteLine("Введенное число должно лежать в промежутке от 1 до 3");
+              Console.WriteLine("Введенное число должно лежать в промежутке от 1 до 5");
               Console.Write("Введите число заново: ");
               games_list = int.Parse(Console.ReadLine());
-            } while (games_list < 0 || games_list > 4);
+            } while (games_list < 0 || games_list > 5);
           }
           game(games_list);
           Console.Clear();
@@ -283,6 +355,7 @@ namespace CasinoWoGUI
             Console.WriteLine($"Процент выигрышей: {wirate}%");
           }
         }
+        
         if (menu == 3)
         {
           stopWatch.Stop();
