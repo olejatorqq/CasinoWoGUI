@@ -42,7 +42,6 @@ namespace CasinoWoGUI
           }
           else
           {
-            balance -= bet;
             Console.WriteLine($"Ваш проигрыш составил: {bet}");
             if (balance == 0)
             {
@@ -51,11 +50,13 @@ namespace CasinoWoGUI
           }
 
           games++;
+          Console.WriteLine("\n________________________________");
           Console.WriteLine("\nЕсли хотите выйти, введите: Exit");
           Console.WriteLine("Если хотите остаться, введите: Stay");
           accept = Console.ReadLine();
         }
       }
+      
       else if (games_list == 2)
       {
         int bet;
@@ -109,12 +110,14 @@ namespace CasinoWoGUI
           }
 
           games++;
+          Console.WriteLine("\n________________________________");
           Console.WriteLine("\nЕсли хотите выйти, введите: Exit");
           Console.WriteLine("Если хотите остаться, введите: Stay");
           accept = Console.ReadLine();
           
         }
       }
+      
       else if (games_list == 3)
       {
         int bet;
@@ -167,15 +170,18 @@ namespace CasinoWoGUI
           }
           
           games++;
+          Console.WriteLine("\n________________________________");
           Console.WriteLine("\nЕсли хотите выйти, введите: Exit");
           Console.WriteLine("Если хотите остаться, введите: Stay");
           accept = Console.ReadLine();
         }
       }
+      
       else if (games_list == 4)
       {
         int bet;
         string accept = "Stay";
+        
         while (accept == "Stay")
         {
           Console.Clear();
@@ -210,11 +216,13 @@ namespace CasinoWoGUI
           }
           
           games++;
+          Console.WriteLine("\n________________________________");
           Console.WriteLine("\nЕсли хотите выйти, введите: Exit");
           Console.WriteLine("Если хотите остаться, введите: Stay");
           accept = Console.ReadLine();
         }
       }
+      
       else if (games_list == 5)
       {
         int bet;
@@ -265,11 +273,13 @@ namespace CasinoWoGUI
           }
           
           games++;
+          Console.WriteLine("\n________________________________");
           Console.WriteLine("\nЕсли хотите выйти, введите: Exit");
           Console.WriteLine("Если хотите остаться, введите: Stay");
           accept = Console.ReadLine();
         }
       }
+      
       else if (games_list == 6)
       {
         int bet;
@@ -324,6 +334,7 @@ namespace CasinoWoGUI
           }
           
           games++;
+          Console.WriteLine("\n________________________________");
           Console.WriteLine("\nЕсли хотите выйти, введите: Exit");
           Console.WriteLine("Если хотите остаться, введите: Stay");
           accept = Console.ReadLine();
@@ -351,6 +362,7 @@ namespace CasinoWoGUI
       }
  
       Console.ResetColor();
+      
       if (number % 2 == 0 && num % 2 == 0)
         return true;
  
@@ -367,6 +379,7 @@ namespace CasinoWoGUI
       Console.Write($"Здравствуйте, {name}, введите Ваш баланс: ");
       balance = int.Parse(Console.ReadLine());
       Console.WriteLine($"\nИгрок: {name}\nБаланс: {balance}");
+      double change_balance = balance;
       Stopwatch stopWatch = new Stopwatch();
       stopWatch.Start();
       
@@ -377,12 +390,13 @@ namespace CasinoWoGUI
         Console.WriteLine("\t  2. Процент выигрышей");
         Console.WriteLine("\t  3. Время в игре");
         Console.WriteLine("\t  4. Баланс");
+        Console.WriteLine("\t  5. Изменение баланса");
         Console.Write("Выберите необходимый пункт: ");
         int menu = int.Parse(Console.ReadLine());
         
-        while (menu < 0 || menu > 4)
+        while (menu < 0 || menu > 5)
         {
-          Console.WriteLine("Введенное число должно лежать в промежутке от 1 до 4");
+          Console.WriteLine("Введенное число должно лежать в промежутке от 1 до 5");
           Console.Write("Введите число заново: ");
           menu = int.Parse(Console.ReadLine());
         }
@@ -437,6 +451,22 @@ namespace CasinoWoGUI
         if (menu == 4)
         {
           Console.WriteLine($"Ваш баланс: {balance}");
+        }
+
+        if (menu == 5)
+        {
+          if (change_balance > balance)
+          {
+            Console.WriteLine($"Ваш проигрыш за все время составил: {balance - change_balance}");
+          }
+          else if (change_balance < balance)
+          {
+            Console.WriteLine($"Ваш выигрыш за все время игры составил: {balance - change_balance}");
+          }
+          else
+          {
+            Console.WriteLine("Ваш баланс не изменился");
+          }
         }
       }
     }
